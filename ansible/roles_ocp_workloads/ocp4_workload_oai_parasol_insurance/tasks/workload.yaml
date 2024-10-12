@@ -26,7 +26,7 @@
 
 - name: Apply patch to create resourceHealthChecks if it does not exist
   command: >-
-    oc patch argocd/openshift-gitops -n openshift-gitops --type='merge' -p='{"spec": {"resourceHealthChecks": [ "{{ lookup('template', 'is_health_check.json') }}" ]}}'"
+    oc patch argocd/openshift-gitops -n openshift-gitops --type='merge' -p='{"spec": {"resourceHealthChecks": [ "{{ lookup('template', 'is_health_check.json') }}" ]}}'
   when: not health_checks_exist and argocd_info.resources | length > 0
 
 # Restart the DevWorkspace controller that gets sometimes stuck and blocks ArgoCD

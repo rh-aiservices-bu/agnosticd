@@ -14,6 +14,10 @@
     oc patch argocd/openshift-gitops -n openshift-gitops --type merge --patch "{{ lookup('template', 'rolling_updates.json') }}"
   when: argocd_info.resources | length > 0
 
+- name: Set default value for health_checks_exist
+  set_fact:
+    health_checks_exist: false
+
 - name: Check if resourceHealthChecks exists in the spec
   set_fact:
     health_checks_exist: "{{ argocd_info.resources[0].spec.resourceHealthChecks is defined }}"

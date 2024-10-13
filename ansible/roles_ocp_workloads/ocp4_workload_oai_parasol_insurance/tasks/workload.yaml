@@ -52,6 +52,7 @@
     namespace: openshift-operators
   loop: "{{ devspaces_pods }}"
   when: devspaces_pods | length > 0
+  ignore_errors: true
 
 - name: Wait for the new Pod to be recreated
   k8s_info:
@@ -62,6 +63,7 @@
   until: new_pod_info.resources | selectattr('metadata.name', 'match', '^devworkspace-controller-manager') | list | length > 0
   retries: 10
   delay: 15
+  ignore_errors: true
 
 # Clone the Lab repo and apply the ApplicationSet YAML file
 - name: Clone the Lab repo
